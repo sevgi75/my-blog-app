@@ -1,8 +1,10 @@
 
 const useAuthCalls = () => {
-  return (
-    <div>useAuthCalls</div>
-  )
+
+  const login = async(userInfo)=>{
+    
+  }
+  return {login}
 }
 
 export default useAuthCalls
