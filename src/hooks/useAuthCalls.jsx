@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux"
-import { fetchFail, fetchStart, loginSuccess } from "../features/authSlice"
+import { fetchFail, fetchStart, loginSuccess, registerSuccess } from "../features/authSlice"
 import { useNavigate } from "react-router-dom"
 import useAxios from "./useAxios"
 import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify"
@@ -21,6 +21,20 @@ const useAuthCalls = () => {
       console.log(error);
       toastErrorNotify("Login işlemi başarisiz!")
       dispatch(fetchFail())      
+    }
+  }
+  const register = async(userInfo)=>{
+    dispatch(fetchStart())
+    try {
+      const {data} = await axiosPublic.post("/users/", userInfo)
+      console.log(data);
+      toastSuccessNotify("Register işlemi başarili.")
+      dispatch(registerSuccess(data))
+      navigate("/")      
+    } catch (error) {
+      console.log(error);
+      toastErrorNotify("Register işlemi başarisiz oldu!")
+      dispatch(fetchFail())
     }
   }
   return {login}
