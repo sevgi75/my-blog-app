@@ -12,6 +12,8 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import useAuthCalls from '../hooks/useAuthCalls';
 // import AdbIcon from '@mui/icons-material/Adb';
 
 const pages = [
@@ -28,10 +30,29 @@ const pages = [
     link: "about",
   },
 ];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = [
+  {
+    page:"login",
+    link:"login",
+  },
+  {
+    page:"My Blogs",
+    link:"myBlogs",
+  },
+  {
+    page:"Profile",
+    link:"profile",
+  },
+  {
+    page:"logout",
+    link:"logout",
+  },
+];
 
 function NavBar() {
   const navigate = useNavigate()
+  const {user} = useSelector((state)=>state.auth)
+  const {logout} = useAuthCalls()
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const handleNavBarMenu = (e) => {
@@ -175,11 +196,51 @@ function NavBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
+              {user && (
+                <MenuItem
+                onClick={()=>{
+                  handleCloseUserMenu();
+                  navigate("my-blogs")
+                }}
+                >
+                My Blogs
+                </MenuItem>
+              )}
+              {user && (
+                <MenuItem
+                onClick={()=>{
+                  handleCloseUserMenu();
+                  navigate("profile")
+                }}
+                >
+                Profile
+                </MenuItem>
+              )}
+              {user && (
+                <MenuItem
+                onClick={()=>{
+                  handleCloseUserMenu();
+                  logout()
+                }}
+                >
+                Logout
+                </MenuItem>
+              )}
+              {!user && (
+                <MenuItem
+                onClick={()=>{
+                  handleCloseUserMenu();
+                  navigate("login")                
+                }}
+                >
+                Login
+                </MenuItem>
+              )}
+              {/* {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
-              ))}
+              ))} */}
             </Menu>
           </Box>
         </Toolbar>

@@ -2,13 +2,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-// import PrivateRouter from "./PrivateRouter";
+import PrivateRouter from "./PrivateRouter";
 import Dashboard from "../pages/Dashboard";
 import NotFound from "../pages/NotFound";
 import NavBar from "../components/NavBar";
 import FooTer from "../components/FooTer";
 import NewBlog from "../pages/NewBlog";
 import About from "../pages/About";
+import MyBlogs from "../pages/MyBlogs";
 
 const AppRouter = () => {
   return (
@@ -20,9 +21,9 @@ const AppRouter = () => {
         <Route path="/about" element={<About />}/>
         <Route path="/login" element={<Login />} />
         <Route path="register" element={<Register />} />
-        {/* <Route path="stock" element={<PrivateRouter />}>
-          <Route path="" element={<Dashboard />} />
-        </Route> */}
+        <Route path="" element={<PrivateRouter />}>
+          <Route path="/my-blogs" element={<MyBlogs />} />
+        </Route>
         <Route path="*" element={<NotFound />}/>
       </Routes>
       <FooTer />
